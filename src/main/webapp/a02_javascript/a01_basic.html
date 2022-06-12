@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	// 주석문
+	// s : ctrl + space, 선택으로 자동 코드 생성
+/*
+# 자바스크립트 언어
+1. 생성
+	1) 1995년 넷스케이프 개발
+	2) 네스케이스네비게이터 2.0 브라우저에 최초 탑재
+	3) 웹 프로그래밍 개념 창시
+2. 특징
+	1) html 문서에 내장 : 조각 소스 코드
+	2) 스크립트 언어
+		- 인터프린터 실행
+		- 컴파일 필요 없음
+	3) 단수
+		c언어 구조 차용
+		배우기 쉬움
+ */
+ 	alert("자바스크립트 시작!!")
+ 	var sum = 0; // 타입을 선언하지 않고 할당하는 순간 결정이 된다.
+	for(cnt = 0; cnt < 10; cnt++){
+		sum += cnt
+	}
+//	alert("총합 : " + sum)
+/*
+# 웹 페이지에서 자바스크립트의 역할
+1. 사용자의 입력 및 계산
+	1) 마우스와 키보드 입력은 오직 자바스크립트만 가능
+	2) 계산 가능
+2. 웹 페이지 내용 및 모양의 동작 제어
+	1) html 태그의 속성, 콘텐츠, CSS 프로퍼티 값 동적 변경
+		html의 태그를 객체로 인식(DOM)하여 속성과 속성값을 활용하여 변경 처리 가능
+3. 브라우저 제어
+	1) 브라우저 윈도우 크기 및 모양 제어
+	2) 새 윈도우 열기/닫기
+	3) 다른 웹 사이트 접속
+	4) 히스토리 제어
+4. 웹 서버와 통신
+	1) ajax(비동기 통신 자바스크립트)를 통해서 서버의 데이터를 받을 수 있다.
+5. 웹 애플리케이션 작성
+	1) 캔버스 그래픽, 로컬/세션 스토리지 저장, 위치정보서비스 등
+	
+# 자바스크립트 코드의 위치
+1. html 태그의 이벤트 리스터 속성에 작성
+2. script 태그에 작성
+3. 자바스크립트 파일에 작성
+4. url 부분에 작성
+*/
+
+ 	function chFun(h2Obj){
+		h2Obj.innerText="반갑습니다.(글자변경)"
+		h2Obj.style.backgroundColor="pink"
+	}
+	function chColor(obj){
+		// alert(obj);
+		// obj : window 창 전체 객체를 넘긴다.
+		obj.document.body.style.backgroundColor="pink"
+		alert("호출");
+		// obj.innerText="green";
+	}
+
+ </script>
+ <script type="text/javascript" src="z01_sample.js"></script>
+</head>
+<body>
+	<h2 onclick="this.innerText='한라인명령'">안녕하세요</h2>
+	<h2 onclick="chFun(this)">안녕하세요</h2>
+	<h3 onclick="call()">외부 선언 js 호출</h3>
+	<a href="javascript:chColor(this)">자바스크립트 실행</a>
+</body>
+</html>
