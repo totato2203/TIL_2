@@ -63,13 +63,17 @@ document.querySelector("h3").innerText="3-1. ID : " + id + ", 3-2. PW : " + pass
 var kor = prompt("6-1. 국어점수를 입력하세요.", "86")
 var eng = prompt("6-2. 영어점수를 입력하세요.", "92")
 var math = prompt("6-3. 수학점수를 입력하세요.", "71")
+<<<<<<< HEAD
 /*
+=======
+>>>>>>> aa842315e9f2e615ad1a2fe09a46141807e87766
 var sum = function(kor, eng, math){
 	 return kor - (-eng) -(-math);
  }
 var avg = function(kor, eng, math){
 	return sum(kor, eng, math) / 3;
 }
+<<<<<<< HEAD
 */
 // 문자열 ==> 숫자형
 // var sum = parseInt(kor) + parseInt(eng) + parseInt(math)
@@ -81,6 +85,8 @@ var avg = function(kor, eng, math){
 		return sum / 3;
 	}
 
+=======
+>>>>>>> aa842315e9f2e615ad1a2fe09a46141807e87766
 
 var h6Arry = document.querySelectorAll("h6")
 h6Arry[0].innerText="6-1. 국어점수 : " + kor
@@ -136,7 +142,11 @@ function tot(num03){
 <script type="text/javascript">
 // 10. <input name="num01"/>의 DOM객체를 접근하는 형식과 여기에 있는 value값을 가져오는 방법을 기술하세요.
 	function numnum(){
+<<<<<<< HEAD
 		var num01 = document.querySelector("input[name=num01]").value
+=======
+		var num01 = document.querySelector("[name=num01]").value
+>>>>>>> aa842315e9f2e615ad1a2fe09a46141807e87766
 		alert(num01 + " * 5 = " + num01 * 5)
 	}
 </script>

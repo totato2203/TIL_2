@@ -30,14 +30,19 @@
 /*
 # 웹 페이지에서 자바스크립트의 역할
 1. 사용자의 입력 및 계산
+<<<<<<< HEAD
 	1) 마우스와 키보드/클릭 입력은 오직 자바스크립트만 가능
 		함수 선언과 익명함수를 통해서 처리
 		이벤트 ==> 이벤트핸들러함수
 		ex) 클릭(이벤트) ==> 정의된 함수(이벤트 핸들러 함수)
+=======
+	1) 마우스와 키보드 입력은 오직 자바스크립트만 가능
+>>>>>>> aa842315e9f2e615ad1a2fe09a46141807e87766
 	2) 계산 가능
 2. 웹 페이지 내용 및 모양의 동작 제어
 	1) html 태그의 속성, 콘텐츠, CSS 프로퍼티 값 동적 변경
 		html의 태그를 객체로 인식(DOM)하여 속성과 속성값을 활용하여 변경 처리 가능
+<<<<<<< HEAD
 		DOM 객체 선언
 		var obj = document.querySelector("CSS의 선택자와 동일") : 단일 객체 선택
 		var arry = document.querySelectorAll("") : 여러 개의 객체 선택
@@ -55,6 +60,9 @@
 3. 브라우저 제어(Browser Object Modeling)
 	a href="javascript:call(this)"
 	
+=======
+3. 브라우저 제어
+>>>>>>> aa842315e9f2e615ad1a2fe09a46141807e87766
 	1) 브라우저 윈도우 크기 및 모양 제어
 	2) 새 윈도우 열기/닫기
 	3) 다른 웹 사이트 접속
@@ -69,6 +77,7 @@
 2. script 태그에 작성
 3. 자바스크립트 파일에 작성
 4. url 부분에 작성
+<<<<<<< HEAD
 
 # 자바스크립트 코드 실행에 따른 코드 위치
 1. 자바스크립트도 위에서 아래로 코딩 처리가 수행된다.
@@ -79,6 +88,8 @@
 		- h2 태그 선언
 		- 위 태그를 DOM으로 객체 호출 가능
 	3) 선언된 함수는 호출하는 순간 처리되기 때문에 객체 선언이 가능하다.
+=======
+>>>>>>> aa842315e9f2e615ad1a2fe09a46141807e87766
 */
 
  	function chFun(h2Obj){
@@ -92,23 +103,32 @@
 		alert("호출");
 		// obj.innerText="green";
 	}
+<<<<<<< HEAD
 	function call2(){
 		var h5Obj = document.querySelector("h5");
 		h5Obj.style.backgroundColor="blue";
 		h5Obj.style.color="yellow";
 	}
+=======
+>>>>>>> aa842315e9f2e615ad1a2fe09a46141807e87766
 
  </script>
  <script type="text/javascript" src="z01_sample.js"></script>
 </head>
 <body>
+<<<<<<< HEAD
 	<h4 onclick="call2()">상위에 선언된 함수 호출</h4>
 	<!--  이벤트 호출은 메모리 끝까지 실행되고 모든 함수나 DOM 객체가 로딩된 상황에
 	처리를 하기 때문에 코드 상 밑에 있는 객체라도 호출이 가능하다. -->
+=======
+>>>>>>> aa842315e9f2e615ad1a2fe09a46141807e87766
 	<h2 onclick="this.innerText='한라인명령'">안녕하세요</h2>
 	<h2 onclick="chFun(this)">안녕하세요</h2>
 	<h3 onclick="call()">외부 선언 js 호출</h3>
 	<a href="javascript:chColor(this)">자바스크립트 실행</a>
+<<<<<<< HEAD
 	<h5>색상이 변할까?</h5>
+=======
+>>>>>>> aa842315e9f2e615ad1a2fe09a46141807e87766
 </body>
 </html>
