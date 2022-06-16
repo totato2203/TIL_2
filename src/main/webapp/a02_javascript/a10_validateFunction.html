@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+/*
+# 서버로 전송하기 전에 유효성 check
+1. 서버로 전송되는 데이터를 프론트단에서 유효성을 check하여
+	처리하는 것을 말한다.
+2. 유효성 처리 내용
+	1) 공백 여부 확인
+	2) password/password 확인
+		패스워드 : [   ]
+		패스워드 확인 : [   ]
+		두 내용이 동일한 경우에만 입력이 가능하게 처리
+	3) 글자수에 대한 제한 :
+		id는 4~8, 8~16 사이에 입력
+		ps) id인 경우에 ajax로 서버에 회원등록 여부를 처리해서
+			등록되지 않은 경우메나 입력 가능하게 한다.
+	4) 보안강화 : 영어 대소문자, 숫자, 특수문자 각각 하나 이상 들어가야함
+		이메일이나 전화번호는 형식에 맞게 입력
+		==> 정규식(정규표현식) 처리 [a]w*
+		
+ */
+	function sendDataId(){
+		var id = document.querySelector("[name=id]")
+		var pw = document.querySelector("[name=pw]")
+		var pwChk = document.querySelector("[name=pwChk]")
+		var name = document.querySelector("[name=name]")
+		// ps) 주의 - java에서만 equals()를 통해 문자열을 비교하고,
+		//			script 언어에서는 == 비교연산자를 통해 문자열을 비교한다.
+		if(id.value == ""){
+			alert("아이디는 필수 입력사항 입니다!!")
+			id.focus(); // 해당 입력된 요소객체에 focus() 처리
+			return; // 전송을 중단처리한다.
+		}else{
+			// 아이디를 입력했을 때 글자 수 제한 처리
+			// .length ps) 주의 - java에서는 일반배열 배열.length -크기,
+			//						문자열.length() 구분
+			// js : 문자열이나 배열이나 동일하게 length를 활용한다.
+			// id.value 입력한 값을 기준으로 처리
+			alert(id.value.length)
+			if(!(id.value.length >= 8 && id.value.length <= 16)){
+			// if(id.length < 8 || id.length > 16){ : 위와 같은 조건문
+				alert("아이디는 8~16자 사이로만 입력 가능합니다.")
+				return; // 더 이상 프로세스가 진행되지 않게(submit 되지 않게) 처리
+			}
+		}
+		if(pw.value == ""){
+			alert("패스워드는 필수 입력사항 입니다!!")
+			pw.focus();
+			return;
+		}
+		if(pwChk.value != pw.value){
+			alert("확인값이 입력하신 패스워드와 일치하지 않습니다!!")
+			pw.value = ""
+			pwChk.value = ""
+			pwChk.focus();
+			return;
+		}
+		if(name.value == ""){
+			alert("이름은 필수 입력사항 입니다!!")
+			name.focus();
+			return;
+		}else{
+			alert(name.value.length)
+			if(!(name.value.length >= 2 && name.value.length <= 8)){
+				alert("이름은 2~8자 사이로만 입력 가능합니다.")
+				return;
+			}
+		}
+		
+		document.querySelector("form").submit();
+	}
+
+</script>
+</head>
+<body>
+	<h2>회원가입</h2>
+	<form action="a11_memberReg.jsp">
+		아이디 : <input type="text" name="id"/><br>
+		<!-- 
+		패스워드/패스워드 확인 넣고
+		1. 입력에 대한 유효성 check
+		2. 패스워드와 패스워드 확인이 동일한지 여부를 check하여
+			동일하지 않으면 전송 중단, 동일하지 않다고 표기
+		 -->
+		<br>
+		패스워드 : <input type="text" name="pw"/><br>
+		패스워드 확인 : <input type="text" name="pwChk"/><br>
+		<br>
+		이름 : <input type="text" name="name"/><br>
+		<!-- 
+		ex) 이름 : [   ]
+		1. 이름은 반드시 입력
+		2. 이름은 2~8자 사이만 입력 가능하게 처리
+		
+		 -->
+		
+		<br>
+		<input type="button" value="회원등록" onclick="sendDataId()"/>
+	</form>
+</body>
+</html>

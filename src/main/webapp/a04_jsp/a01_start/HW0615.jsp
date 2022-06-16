@@ -5,6 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>구구단을 외자?</title>
+	<style type="text/css">
+		td, input{text-align:center;}
+	</style>
 </head>
 <body>
 <%--
@@ -47,8 +50,17 @@ String[] prices = request.getParameterValues("price");
 [1단계:확인] 3. 구구단을 외자? 라는 타이틀 화면으로 임의의 값이 [@@] X [@@@] ? [   ] [확인] 라는 화면이 로딩되고,
             답을 입력후, 확인 눌렀을 때, 요청된 페이지에 문제와 입력된 값을 출력,
             맞으면 정답, 틀리면 오답을 출력되게 하세요.
+	# 요청값 프로세스
+	1) 초기화면 요청받은 코드 같이 로딩 기억
+			- 초기화면에는 요청값을 받지 않았기 때문에 null에 대한 처리를 반드시 해야한다.
+	
+	1) 자바프로그램
+	2) html 화면구현
+	3) 스크립틀릿, 익스프레션 만들어 자바코드 추가<% %>
 --%>
+
 	<br><br>
+	<h3>3. 나의 답</h3>
 	<form action="HW0615_rev.jsp" method="post">
 		3. <input type="text" name="num01" value="<%=(int)(Math.random() * 99 + 1)%>">
 		 X <input type="text" name="num02" value="<%=(int)(Math.random() * 999 + 1)%>"> 
@@ -56,12 +68,77 @@ String[] prices = request.getParameterValues("price");
 		<input type="submit" value="확인">
 	</form>
 
+<br>
+<h3>3. 해설</h3>
+<%
+	// 초기화면을 위한 데이터(문제 데이터)
+	int gradeR = (int)(Math.random() * 8 + 2); // 2~8
+	int cntR = (int)(Math.random() * 9 + 1); // 1~9
+	// 요청값으로 입력된 데이터 처리	null 일 때는 0으로 설정
+	int grade, cnt, reply; grade = cnt = reply = 0;
+	// 모든 요청값 일단은 문자열
+	String gradeS = request.getParameter("grade");
+	String cntS = request.getParameter("cnt");
+	String replyS = request.getParameter("reply");
+	// 입력 후 요청값이 있을 때 숫자형으로 형변환 처리
+	if(gradeS != null) grade = Integer.parseInt(gradeS);
+	if(cntS != null) cnt = Integer.parseInt(cntS);
+	if(replyS != null) reply = Integer.parseInt(replyS);
+	
+	System.out.println("입력값1 : " + grade);
+	System.out.println("입력값2 : " + cnt);
+	System.out.println("입력값3 : " + reply);
+	// 정답값 저장 초기 선언
+	int cor = 0;
+	// 정답/오답 표기 문자열
+	String result = "오답";
+	// 정답여부 처리
+	// 요청값이 있을 때
+	if(grade != 0){
+		// 임의로 낸 문제의 숫자들을 곱하여 정답값 저장
+		cor = grade * cnt;
+		if(reply == cor){
+			result = "정답";
+		}
+	}
+%>
+	<h2 align="center">구구단을 외자!</h2>
+	<form>
+	<table align="center" border>
+		<tr>
+			<td><input type="text" name="grade" size="2" value="<%=gradeR %>"/></td>
+			<td>X</td>
+			<td><input type="text" name="cnt" size="2" value="<%=cntR %>"/></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<input type="text" size="2" name="reply"/></td>
+		</tr>
+		<tr>
+			<td colspan="3">
+				<input type="submit" value="결과확인"/></td>
+		</tr>
+		<%if(grade != 0){ %>
+		<tr>
+			<td colspan="3">
+				<%=grade %> X <%=cnt %> = <%=reply %> (<%=result %>)
+			</td>
+		</tr>
+		<%} %>
+		
+	</table>
+	</form>
+
 <%--
 [1단계:확인] 4. [   ][select +/-/*// ][   ] [결과확인] 결과확인을 통해 선택된 연산이 처리되게 하세요
+1. 자바코드
+2. 화면 UI
+3. 스크립트 처리
 --%>
 		<br>
+		<h3>4. 나의 답</h3> 
 		<form action="HW0615_rev02.jsp" method="post">
-		4. <input type="text" name="firNum">
+		<input type="text" name="firNum">
 		<select name="cal">
 			<option value="+" selected> + </option>
 			<option value="-"> - </option>
@@ -71,6 +148,82 @@ String[] prices = request.getParameterValues("price");
 		<input type="text" name="secNum"> = 
 		<input type="submit" value="결과확인"><br>
 		</form>
+		
+		
+		<br>
+		<h3>4. 해설</h3>
+		<script>
+			function cal(){
+				var calObjVal = document.querySelector("[name=cal]").value;
+				if(calObjVal==""){
+					alert("연산자 중 하나를 선택해야 합니다.")
+					return;
+				}
+				var num01Val = document.querySelector("[name=num01]").value;
+				// isNaN : Is Not a Number : 숫자가 아닐 때 true, 숫자일 때 false
+				if(num01Val==""){
+					alert("숫자를 입력해야 합니다.")
+					return;
+				}
+				var num02Val = document.querySelector("[name=num02]").value;
+				if(num02Val==""){
+					alert("숫자를 입력해야 합니다.")
+					return;
+				}
+				var form = document.querySelector("form");
+				form.submit();
+			}
+		</script>
+		<%  // 요청값 처리
+			String num01S = request.getParameter("num01");
+			String num02S = request.getParameter("num02");
+			String calS = request.getParameter("cal");
+			int num01, num02, calIdx, sum; num01 = num02 = calIdx = sum = 0;
+			String cal = "";
+			// 요청값이 있을 때 처리
+			if(calS != null && num01S != null && calS != null){
+				num01 = Integer.parseInt("num01");
+				num02 = Integer.parseInt("num02");
+				calIdx = Integer.parseInt("calS");
+				// 선택한 0(+), 1(-), 2(*), 3(/) 숫자로 변환
+				int []sums = {num01 + num02, num01 - num02, num01 * num02,
+						num01 == 0 || num02 == 0 ? 0:num01 / num02};
+				String []cals = {"+", "-", "*", "/"};
+				sum = sums[calIdx];
+				cal = cals[calIdx];
+				
+				/*
+				if(calIdx == 0) sum = num01 + num02; cal = "+";
+				if(calIdx == 1) sum = num01 - num02; cal = "-";
+				if(calIdx == 2) sum = num01 * num02; cal = "*";
+				if(calIdx == 3){
+					cal = "/";
+					// /zero 예외 대비
+					if(num01 == 0 || num02 == 0){
+						sum = 0;
+					}else{
+						sum = num01 / num02;
+					}
+				}
+				*/
+			}
+		%>
+		
+		<form>
+			<input type="text" name="num01" size="2"/>
+			<select name="cal" onchange="cal()">
+				<option value=""> 연산자 선택 </option>
+				<option value="0"> + </option>
+				<option value="1"> - </option>
+				<option value="2"> * </option>
+				<option value="3"> / </option>
+			</select>
+			<input type="text" name="num02" size="2"/>
+			<input type="submit" value="계산"/>
+		</form>
+		<%if (calS != null){ %>
+			<%=num01 %> <%=cal %> <%=num02 %> = <%=sum %>
+		<%} %>
 		
 <%--
 [1단계:개념] 5. form 하위 요소객체 중, 대표적인 단일/다중 선택을
