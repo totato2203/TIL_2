@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+</head>
+<body>
 <script type="text/javascript">
 /*
 2022-06-16
@@ -24,9 +26,12 @@
 		
 [1단계:확인] 2. [js]물건의 가격[   ], 갯수[  ] [총계] 화면에서 총계를 클릭시,
          가격과 갯수 입력 여부와 숫자형 데이터에 대한 유효성 check를 처리하고, 총계를 출력하세요.
+	1) 화면 구성 (html)
+	2) 이벤트 선언, 이벤트 핸들러 함수
+	3) DOM을 통해서 각 구성요소 접근
+	4) 조건/반복문 처리, 필요로 하는 내장 함수 처리
 */
 	function sendDataBuy(){
-		var h2Obj = document.querySelector("h2")
 		var price = document.querySelector("[name=price]")
 		var cnt = document.querySelector("[name=cnt]")
 		if(price.value == ""){
@@ -34,61 +39,28 @@
 			price.focus();
 			return;
 		}else if(isNaN(price.value)){
-			price.value = parseInt(price.value)
+			alert("숫자형 데이터를 입력하세요!!")
+			price.value = "";
+			price.focus();
+			return;
+		}else{
+			price.value = Number(price.value);
 		}
 		if(cnt.value == ""){
 			alert("물건 개수는 필수 입력사항 입니다!!")
 			cnt.focus();
 			return;
 		}else if(isNaN(cnt.value)){
-			cnt.value = parseInt(cnt.value)
-		}
-		h2Obj.innerText = "총계 : " + (price.value * cnt.value) + "원"
-	}
-
-/*
-[1단계:확인] 3. [js] textarea에 글을 입력하고 [등록]을 클릭시, 글자수가 지정한 글자수(15)초과이면
-      @@/15 글자수와 함께 빨간색으로 변경, 유효한 글자수이면(1~15) 파랑색으로 표기처리하세요.
-*/
-	function sendDataTA(){
-		var content = document.querySelector("[name=content]")
-		if(content.value == ""){
-			alert("입력값이 없습니다!")
-			content.focus();
+			alert("숫자형 데이터를 입력하세요!!")
+			cnt.value = "";
+			cnt.focus();
 			return;
 		}else{
-			alert("총 글자 수 : " + content.value.length)
-			if(!(content.value.length >= 1 && content.value.length <= 15)){
-				alert("이름은 1~15자 사이로만 입력 가능합니다.")
-				content.style.color = "red"
-			}else{
-				alert("유효한 글자 수(1~15) 입니다.")
-				content.style.color = "blue"
-			}
+			cnt.value = Number(cnt.value);
 		}
-	}
-
-/*
-[1단계:확인] 4. [js/jsp] 로그인 화면을 만들고, id/pass에 대한 공백유효성을 js로 처리,
-      jsp로 다음페이지에서 받아 himan/7777일 때만 로그인성공 표시, 그외는 로그인 실패 표기하세요.
- */
- 	function sendDataLogin(){
-		var id = document.querySelector("[name=id]")
-		var pw = document.querySelector("[name=pw]")
-		if(id.value == ""){
-			alert("아이디는 필수 입력사항 입니다.")
-			id.focus();
-			return;
-		}
-		if(pw.value == ""){
-			alert("패스워드는 필수 입력사항 입니다.")
-			pw.focus();
-			return;
-		}
+		document.querySelector("h2").innerText = "총계 : " + price.value * cnt.value + "원";
 	}
 </script>
-</head>
-<body>
 
 	<form>
 		<h4>2.</h4>
@@ -99,14 +71,71 @@
 		<h2></h2>
 	</form>
 	
+
+<script>
+/*
+[1단계:확인] 3. [js] textarea에 글을 입력하고 [등록]을 클릭시, 글자수가 지정한 글자수(15)초과이면
+      @@/15 글자수와 함께 빨간색으로 변경, 유효한 글자수이면(1~15) 파랑색으로 표기처리하세요.
+	1) 화면 구성
+	2) js 처리(이벤트 이벤트 핸들러 함수)
+*/
+	function sendDataTA(){
+		var content = document.querySelector("[name=content]")
+		var shCntObj = document.querySelector("#shTxtCnt");
+		shCntObj.innerText = content.value.length + "/15";
+		if(content.value == ""){
+			alert("입력값이 없습니다!")
+			content.focus();
+			return;
+		}else{
+			if(!(content.value.length >= 1 && content.value.length <= 15)){
+				content.style.color = "red"
+				alert("유효 글자 수(1~15) 초과!")
+			}else{
+				content.style.color = "blue"
+			}
+		}
+	}
+</script>
+
 	<form>
 		<h4>3.</h4>
-		<textarea name="content" cols="20" rows="10" style="color:green"></textarea><br>
+		<textarea name="content" cols="20" rows="10" style="color:green"
+		onkeyup="sendDataTA()"></textarea><br>
 		<input type="button" value="등록" onclick="sendDataTA()"/>
+		<span id="shTxtCnt">0/15</span>
 	</form>
+
+
+<script>
+/*
+[1단계:확인] 4. [js/jsp] 로그인 화면을 만들고, id/pass에 대한 공백유효성을 js로 처리,
+      jsp로 다음페이지에서 받아 himan/7777일 때만 로그인성공 표시, 그외는 로그인 실패 표기하세요.
+	1) 기본 화면구성(태그)
+	2) js
+	3) java 처리
+ */
+ 	function sendDataLogin(){
+		var id = document.querySelector("[name=id]")
+		var pw = document.querySelector("[name=pw]")
+		// trim() : 공백을 없애주는 역할
+		if(id.value.trim() == ""){
+			alert("아이디는 필수 입력사항 입니다.")
+			id.value = "";
+			id.focus();
+			return;
+		}
+		if(pw.value.trim() == ""){
+			alert("패스워드는 필수 입력사항 입니다.")
+			pw.value = "";
+			pw.focus();
+			return;
+		}
+	}
+</script>
 	
-	<form action="HW0616_rev.jsp">
-		<h4>4. </h4>
+	<form action="HW0616_rev.jsp" method="post">
+		<h4>4.</h4>
 		ID : <input type="text" name="id"/><br>
 		PW : <input type="text" name="pw"/><br>
 		<input type="submit" value="로그인" onclick="sendDataLogin()"/>
