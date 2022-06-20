@@ -12,6 +12,11 @@ public class Emp {
 	private double comm;
 	private int deptno;
 	public Emp() {}
+	public Emp(String ename, String job) {
+		super();
+		this.ename = ename;
+		this.job = job;
+	}
 	public Emp(int empno, String ename, String job, int mgr, Date hiredate, double sal, double comm, int deptno) {
 		super();
 		this.empno = empno;

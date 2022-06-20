@@ -5,6 +5,13 @@ public class Dept {
 	private String dname;
 	private String loc;
 	public Dept() {}
+	
+	public Dept(String dname, String loc) {
+		super();
+		this.dname = dname;
+		this.loc = loc;
+	}
+
 	public Dept(int deptno, String dname, String loc) {
 		super();
 		this.deptno = deptno;

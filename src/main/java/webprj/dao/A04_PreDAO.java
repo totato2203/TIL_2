@@ -1,5 +1,5 @@
 package webprj.dao;
-// javaexp.a13_database.A04_PreDAO
+// webprj.dao.A04_PreDAO
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -640,6 +640,114 @@ public class A04_PreDAO {
 				}
 				return empList;
 			}
+
+	public ArrayList<Emp> getEmpList2(Emp sch) {
+		ArrayList<Emp> empList = new ArrayList<Emp>();
+		try {
+			setConn();
+			String sql = "SELECT *\r\n"
+					+ "FROM emp\r\n"
+					+ "WHERE ename LIKE '%' || ? || '%'\r\n"
+					+ "AND job LIKE '%' || ? || '%'";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, sch.getEname());
+			pstmt.setString(2, sch.getJob());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				empList.add(new Emp(
+					rs.getInt("empno"),
+					rs.getString("ename"),
+					rs.getString("job"),
+					rs.getInt("mgr"),
+					rs.getDate("hiredate"),
+					rs.getDouble("sal"),
+					rs.getDouble("comm"),
+					rs.getInt("deptno"))
+				);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("DB 에러: " + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("일반 예외 : " + e.getMessage());
+		}finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return empList;
+	}
+
+	public ArrayList<Dept> getDeptList2(Dept sch) {
+		ArrayList<Dept> deptList = new ArrayList<Dept>();
+		try {
+			setConn();
+			String sql = "select * from dept where dname like '%'|| ? ||'%' and loc like '%'|| ? ||'%'";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, sch.getDname());
+			pstmt.setString(2, sch.getLoc());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				deptList.add(new Dept(
+					rs.getInt("deptno"),
+					rs.getString("dname"),
+					rs.getString("loc"))
+				);
+			}
+			//
+			rs.close();
+			pstmt.close();
+			con.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return deptList;
+	}
 
 	public static void main(String[] args) {
 		// 실제는 외부에서 위 DAO의 특정한 객체를 호출하는데,

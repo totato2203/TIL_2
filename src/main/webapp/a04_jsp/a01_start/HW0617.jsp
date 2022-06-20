@@ -71,8 +71,59 @@
          ..
       10 [@@] + [@@] = [   ]
               [확인]
+		1) 화면 구현
+		2) js 처리 : 공백 처리, 숫자 처리
+		3) java 코드 처리
+		4) 스크립트 <% %> / <%= %>
 --%>
+<form method="post">
+<table border>
+	<tr><th>번호</th><th>문제</th></tr>
+	<%for(int cnt = 1; cnt <= 10; cnt++){%>
+	<tr><th><%=cnt %></th>
+		<%
+		int rNum01 = (int)(Math.random() * 99 + 1);
+		int rNum02 = (int)(Math.random() * 99 + 1);
+		%>
+		<td>
+			<input type="text" name="num01" size="1" value="<%=rNum01%>"/> +
+			<input type="text" name="num02" size="1" value="<%=rNum02%>"/> =
+			<input type="text" name="innum" size="1" value="0"/>
+		</td></tr>
+		<tr><td colspan="2" style="text-align:center;">
+				<input type="submit">
+		</td></tr>
+</table>
+</form>
 
+<%
+	int tot = 0; // 전체 점수
+	String []num01SArr = request.getParameterValues("num01");
+	String []num02SArr = request.getParameterValues("num02");
+	String []innumSArr = request.getParameterValues("innum");
+	if(num01SArr != null && num01SArr.length > 0){	// 초기 문제화면과 구분
+		for(int idx = 0; idx < num01SArr.length; idx++){ // 반복문 처리
+	
+			String num01S = num01SArr[idx];
+			String num02S = num02SArr[idx];
+			String innumS = innumSArr[idx];
+
+			int num01 = 0; if(num01S != null) num01 = Integer.parseInt(num01S);
+			int num02 = 0; if(num02S != null) num02 = Integer.parseInt(num02S);
+			int innum = 0; if(innumS != null) innum = Integer.parseInt(innumS);
+			if(innumS != null){ // 입력값이 있을 때
+				int corNum = num01 + num02;
+				if(corNum == innum){
+					tot += 10; // 한 문제 당 10점
+				}
+			}
+%>
+	<h2>총점 : <%=tot %></h2>
+<%} %>
+
+
+<%-- 
+나의 답
 <form>
 <br>
 <br>
@@ -92,5 +143,6 @@
 		
 		
 		%>
+--%>
 </body>
 </html>
