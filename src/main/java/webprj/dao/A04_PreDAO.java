@@ -421,11 +421,11 @@ public class A04_PreDAO {
 	
 	// # return 객체 설정과 키워드 검색
 	
-	public void insertEmp(Emp01 ins) {
+	public void insertEmp(Emp ins) {
 		try {
 			setConn();
 			con.setAutoCommit(false);
-			String sql = "INSERT INTO emp01 values(?, ?, ?, ?,\r\n"
+			String sql = "INSERT INTO emp values(?, ?, ?, ?,\r\n"
 					+ "	to_date(?, 'YYYY-MM-DD'), ?, ?, ?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, ins.getEmpno());
@@ -442,11 +442,9 @@ public class A04_PreDAO {
 			con.close();
 		} catch (SQLException e) {
 			System.out.println("DB 에러: " + e.getMessage());
-			// commit 전에 예외가 발생하면 rollback 처리
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		} catch (Exception e) {
@@ -649,10 +647,16 @@ public class A04_PreDAO {
 					+ "FROM emp\r\n"
 					+ "WHERE ename LIKE '%' || ? || '%'\r\n"
 					+ "AND job LIKE '%' || ? || '%'";
+			// 1. 에러 대비 : sql
+			System.out.println(sql);
 			pstmt = con.prepareStatement(sql);
+			// 2. ?와 mapping 되는 데이터 개수, type(유형), null
 			pstmt.setString(1, sch.getEname());
 			pstmt.setString(2, sch.getJob());
 			rs = pstmt.executeQuery();
+			// 1. 에러 대비 : sql	System.out.println() 반드시 확인
+			// 2. ?와 mapping 되는 데이터 개수, type(유형), null
+			// 3. rs.getInt("empno") : select은 선택 컬럼과 타입
 			while(rs.next()) {
 				empList.add(new Emp(
 					rs.getInt("empno"),

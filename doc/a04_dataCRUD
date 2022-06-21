@@ -1,0 +1,109 @@
+# 웹 화면에서 리스트 등록/수정/삭제 처리
+1. 데이터 등록 처리
+	1) 메인 화면에서 등록 버튼 생성 및 등록 화면으로 이동 처리(js)
+		함수 호출 : location.href="등록화면"
+		
+	2) 등록화면 UI 구성(a02_empInsert.jsp)
+		html/css 처리
+		필수 입력 항목 설정 js로 처리
+		요청값 확인(등록데이터)
+		등록 DAO 구성 및 기능 메소드 호출
+		등록 완료 후 처리 process
+			- confirm() 활용
+				계속 등록
+				list 화면으로 이동 처리
+2. 메인화면에 등록화면 이동 처리 js
+	0) a02_empList.jsp 페이지 타이틀(사원등록)
+	1) 기능함수 선언(a01_empSchList.jsp)
+		function goInsertPage(){
+			location.href="a02_empInsert.jsp";
+		}
+	2) 버튼 선언과 이벤트 핸들러 함수 처리
+		<input type="button" value="사원등록화면" onclick="goInsertPage()"/>
+		
+3. 등록화면 UI 구성
+	1) 등록할 항목 결정 : sql insert를 통해서 확인
+		insert into emp01 values(1000, '홍길동', '사원', 7780,
+			to_date('2020-06-21', 'YYYY-MM-DD'), 3500, 1000, 10);
+		vo 객체에 이 데이터를 받는 생성자를 확인
+		화면 처리
+			사원번호, 사원명, 직책명, 관리자번호, 입사일, 급여, 보너스, 부서번호
+			empno	enam  job	mmr  hiredateS sal comm  deptno
+	2) insert 항목 기준으로 입력할 form 하위 객체들 지정
+		<input type="text" name="ename" placeHolder="사원명을 입력"/>
+		empno, ename, job, mgr, hiredateS, sal, comm, deptno
+		
+		@@@ : empno, ename, job, mgr, hiredateS, sal, comm, deptno
+		### : 사원번호, 사원명, 직책명, 관리자명, 입사일, 급여, 보너스, 부서번호
+		
+		<div class="row">
+  		 	<div class="col-25">
+    			<label for="@@@">###</label>
+   		</div>
+			<div class="col-75">
+				<input type="text" id="@@@" name="@@@" value="" placeholder="### 입력..">
+			</div>
+		</div>
+	
+4. 필수입력항복 설정 js로 처리 요청값 확인(등록데이터)
+	<input type="submit" ==> <input type=""button" onclick="regEmp()"
+	function regEmp(){
+		var empnoObj = document.querySelector("#empno");
+		var enameObj = document.querySelector("#ename");
+		var hiredateSObj = document.querySelector("#hiredateS");
+		if(empnoObj.value==""){
+			alert("사원번호를 입력하세요");
+			empnoObj.focus();
+			return;
+		}
+		if(enameObj.value==""){
+			alert("사원명을 입력하세요");
+			enameObj.focus();
+			return;
+		}
+		if(hiredateSObj.value==""){
+			alert("입사일을 입력하세요");
+			hiredateSObj.focus();
+			return;
+		}
+		document.querySelector("form").submit();
+	}
+	
+	<%
+	// empno, ename, job, mgr, hiredateS, sal, comm, deptno
+	
+	int empno, mgr, deptno; empno = mgr = deptno = 0;
+	double sal, comm; sal = comm = 0;
+	
+	String empnoS = request.getParameter("empno");
+	if(empnoS != null) empno = Integer.parseInt(empnoS);
+	
+	String mgrS = request.getParameter("mgr");
+	if(mgrS != null) mgr = Integer.parseInt(mgrS);
+	
+	String deptnoS = request.getParameter("deptno");
+	if(deptnoS != null) deptno = Integer.parseInt(deptnoS);
+	
+	
+	String salS = request.getParameter("sal");
+	if(salS != null) sal = Double.parseDouble(salS);
+	
+	String commS = request.getParameter("comm");
+	if(commS != null) comm = Double.parseDouble(commS);
+	
+	
+	String ename = request.getParameter("ename"); if(ename == null) ename = "";
+	String job = request.getParameter("job"); if(job == null) job = "";
+	String hiredateS = request.getParameter("hiredateS"); if(hiredateS == null) hiredateS = "";
+	
+	log("empno : " + empno); log("mgr : " + mgr); log("deptno : " + deptno);
+	log("sal : " + sal); log("comm : " + comm);
+	log("ename : " + ename); log("job : " + job); log("hiredateS : " + hiredateS);
+	%>
+	
+	
+	
+	
+	
+	
+	

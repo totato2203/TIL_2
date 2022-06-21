@@ -1,5 +1,5 @@
 package webprj.z01_vo;
-
+// webprj.z01_vo.Dept
 public class Dept {
 	private int deptno;
 	private String dname;
