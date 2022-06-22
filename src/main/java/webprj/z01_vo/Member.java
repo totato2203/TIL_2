@@ -15,6 +15,11 @@ public class Member {
 		this.point = point;
 		this.auth = auth;
 	}
+	public Member(String id, String pw) {
+		super();
+		this.id = id;
+		this.pw = pw;
+	}
 	public String getId() {
 		return id;
 	}
@@ -45,4 +50,5 @@ public class Member {
 	public void setAuth(String auth) {
 		this.auth = auth;
 	}
+	
 }

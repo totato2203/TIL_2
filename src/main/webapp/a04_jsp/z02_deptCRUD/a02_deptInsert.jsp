@@ -13,7 +13,7 @@ String path = request.getContextPath();
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="<%=path %>/a00_com\a01_common.css" rel="stylesheet">
+<link href="<%=path %>/a00_com/a01_common.css" rel="stylesheet">
 
 <script>
 	/*
@@ -53,7 +53,23 @@ String dname = request.getParameter("dname"); if(dname == null) dname = "";
 String loc = request.getParameter("loc"); if(loc == null) loc = "";
 
 log("deptno : " + deptno); log("dname : " + dname); log("loc : " + loc);
+
+String isIns = "N";
+if(deptnoS!=null && !deptnoS.trim().equals("")){
+  A04_PreDAO dao = new A04_PreDAO();
+  dao.insertDept(new Dept(deptno, dname, loc));
+  isIns = "Y";
+}
 %>
+
+<script>
+  var isIns = "<%=isIns%>";
+  if(isIns == "Y"){
+    if(confirm("등록성공!!\n조회화면으로 이동하시겠습니까?")){
+      location.href="a01_deptSchList.jsp"
+    }
+  }
+</script>
 
 <div class="container">
   <form>

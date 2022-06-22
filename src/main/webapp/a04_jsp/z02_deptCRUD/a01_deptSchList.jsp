@@ -20,6 +20,16 @@ input[type=text], select, textarea {
   border-radius: 4px;
   resize: vertical;
 }
+#regBtn{
+  width: 100%;
+  background-color: blue;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
 label {
   padding: 12px 12px 12px 0;
@@ -38,6 +48,30 @@ input[type=submit] {
 
 input[type=submit]:hover {
   background-color: #45a049;
+}
+
+div {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+#customers tr:hover {background-color: #ddd;}
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
 }
 
 .container {
@@ -82,6 +116,7 @@ input[type=submit]:hover {
 	}
 </script>
 </head>
+
 <body>
 <h2>부서정보</h2>
 <%
@@ -119,11 +154,20 @@ for(Dept d : dao.getDeptList2(new Dept("", ""))){
 }
 */
 %>
+<script>
+  function goDetail(deptno){
+    alert(deptno+"상세화면 이동");
+    location.href="a03_deptDetail.jsp?deptno="+deptno;
+  }
+</script>
+
 <table id="customers">
-	<tr><th>부서번호</th><th>부서명</th><th>위치</th></tr>
-	<%for(Dept d : dao.getDeptList2(new Dept(dname, loc))){ %>
-	<tr><td><%=d.getDeptno() %></td><td><%=d.getDname() %></td><td><%=d.getLoc() %></td></tr>
-	<%} %>
+    <tr><th>부서번호</th><th>부서명</th><th>부서위치</th></tr>
+    <% for(Dept d:dao.getDeptList2(new Dept(dname,loc))){%>
+    <tr ondblclick="goDetail(<%=d.getDeptno()%>)">
+    <td><%=d.getDeptno()%></td><td><%=d.getDname()%></td><td><%=d.getLoc()%></td>
+    </tr>
+    <%}%>
 </table>
 
 </body>

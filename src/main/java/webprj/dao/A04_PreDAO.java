@@ -13,6 +13,8 @@ import java.util.Map;
 import webprj.z01_vo.Dept;
 import webprj.z01_vo.Emp;
 import webprj.z01_vo.Emp01;
+import webprj.z01_vo.Member;
+import webprj.z01_vo.Product001;
 
 // DAO(Database Access Object)
 // 전화기와 동일 : 연결/대화/결과를 통해 받은 데이터/종료 - 자원해제, 예외처리
@@ -752,13 +754,371 @@ public class A04_PreDAO {
 		}
 		return deptList;
 	}
+	
+	public Emp getEmpDetail(int empno) {
+		Emp emp = null;
+		try {
+			setConn();
+			String sql = "SELECT empno, ename, job, mgr,"
+					+ "to_char(hiredate, 'YYYY-MM-DD') hiredate_s,"
+					+ "sal, comm, deptno \n"
+					+ "FROM EMP011\n"
+					+ "WHERE empno = ?";
+			System.out.println(sql);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, empno);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				emp = new Emp(
+							rs.getInt("empno"),
+							rs.getString("ename"),
+							rs.getString("job"),
+							rs.getInt("mgr"),
+							rs.getString("hiredate_s"),
+							rs.getDouble("sal"),
+							rs.getDouble("comm"),
+							rs.getInt("deptno"));
+
+
+							System.out.println(rs.getDouble("sal")); 
+							System.out.println(rs.getDouble("comm")); 
+							System.out.println(rs.getInt("deptno")); 
+			}
+
+			// 자원해제
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DB 에러 : " + e.getMessage());
+			// commit 전에 예외가 발생하면 rollback 처리
+		} catch (Exception e) {
+			System.out.println("일반 예외 : " + e.getMessage());
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return emp;
+	}
+	
+	public void insertDept(Dept ins) {
+		try {
+			setConn();
+			con.setAutoCommit(false);
+			String sql = "INSERT INTO DEPT011 values(?,?,?) ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, ins.getDeptno());
+			pstmt.setString(2, ins.getDname());
+			pstmt.setString(3, ins.getLoc());
+			pstmt.executeUpdate();
+			con.commit();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DB 에러 : " + e.getMessage());
+			// commit 전에 예외가 발생하면 rollback 처리
+		} catch (Exception e) {
+			System.out.println("일반 예외 : " + e.getMessage());
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public Dept getDeptDetail(int deptno) {
+		Dept dept = null;
+		try {
+			setConn();
+			String sql = "SELECT deptno, dname, loc\n"
+					+ "FROM dept011\n"
+					+ "WHERE deptno = ?";
+			System.out.println(sql);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, deptno);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				dept = new Dept(
+							rs.getInt("deptno"),
+							rs.getString("dname"),
+							rs.getString("loc")
+						);
+			}
+			// 자원해제
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DB 에러 : " + e.getMessage());
+			// commit 전에 예외가 발생하면 rollback 처리
+		} catch (Exception e) {
+			System.out.println("일반 예외 : " + e.getMessage());
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return dept;
+	}
+	
+	public ArrayList<Member> getMemList(Member sch) {
+		ArrayList<Member> memList = new ArrayList<Member>();
+		try {
+			setConn();
+			String sql = "select * \n"
+						+ "from member \n"
+						+ "where id like '%'|| ? ||'%' \n"
+						+ "and pw like '%'|| ? ||'%'";
+			System.out.println(sql);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, sch.getId());
+			pstmt.setString(2, sch.getPw());
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				memList.add(new Member(
+								rs.getString("id"),
+								rs.getString("pw"),
+								rs.getString("name"), 
+								rs.getInt("point"),
+								rs.getString("auth") )
+								);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("일반 예외 : " + e.getMessage());
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return memList;
+	}
+
+	public void insertMember(Member ins) {
+		try {
+			setConn();
+			con.setAutoCommit(false);
+			String sql = "INSERT INTO Member011 values(?,?,?,?,?) ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ins.getId());
+			pstmt.setString(2, ins.getPw());
+			pstmt.setString(3, ins.getName());
+			pstmt.setInt(4, ins.getPoint());
+			pstmt.setString(5, ins.getAuth());
+			pstmt.executeUpdate();
+			con.commit();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DB 에러 : " + e.getMessage());
+			// commit 전에 예외가 발생하면 rollback 처리
+		} catch (Exception e) {
+			System.out.println("일반 예외 : " + e.getMessage());
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public Product001 getProductDetail(int pno) {
+		Product001 pd = null;
+		try {
+			setConn();
+			String sql = "SELECT *\n"
+					+ "FROM product001\n"
+					+ "WHERE pno = ?";
+			System.out.println(sql);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, pno);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				pd = new Product001(
+							rs.getInt("pno"),
+							rs.getString("pname"),
+							rs.getInt("price"),
+							rs.getInt("rcnt")
+						);
+			}
+			// 자원해제
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("DB 에러 : " + e.getMessage());
+			// commit 전에 예외가 발생하면 rollback 처리
+		} catch (Exception e) {
+			System.out.println("일반 예외 : " + e.getMessage());
+		} finally {
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return pd;
+	}
+
+	public ArrayList<Member> getMemList(String id, String pw) {
+		ArrayList<Member> memList = new ArrayList<Member>();
+		try {
+			setConn();
+			String sql = "select * \n"
+						+ "from member \n"
+						+ "where id like '%'|| ? ||'%' \n"
+						+ "and pw like '%'|| ? ||'%'";
+			System.out.println(sql);
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pw);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				memList.add(new Member(
+								rs.getString("id"),
+								rs.getString("pw"),
+								rs.getString("name"), 
+								rs.getInt("point"),
+								rs.getString("auth") )
+								);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("일반 예외 : " + e.getMessage());
+		} finally {
+			if(rs!=null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(pstmt!=null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if(con!=null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return memList;
+	}
 
 	public static void main(String[] args) {
 		// 실제는 외부에서 위 DAO의 특정한 객체를 호출하는데,
 		// 그 전에 테스트로 main()에서 객체를 생성해본다.
 		
 		A04_PreDAO dao = new A04_PreDAO();
-		
+		/*
 		Map<String, String> sch = new HashMap<String, String>();
 		sch.put("ename", "A");
 		sch.put("job", "");
@@ -782,6 +1142,7 @@ public class A04_PreDAO {
 		System.out.println("부서번호(30)별 개수 : " + dao.getEmpCnt(30));
 		System.out.println("직업별 개수 : " + dao.getEmpCnt("PRESIDENT"));
 		
+		*/
 		
 		ArrayList<Emp01> empList01 = dao.getEmpList01();
 		
@@ -800,6 +1161,15 @@ public class A04_PreDAO {
 		
 //		dao.deleteEmp(7499);
 		
+		
+		ArrayList<Member> MemList = dao.getMemList("", "");
+			 for(Member m:MemList) {
+			 	System.out.print(m.getId() + "\t");
+			 	System.out.print(m.getPw() + "\t");
+			 	System.out.print(m.getName() + "\t");
+			 	System.out.print(m.getPoint() + "\t");
+				System.out.print(m.getAuth() + "\n");
+			}
 		
 		
 	}
