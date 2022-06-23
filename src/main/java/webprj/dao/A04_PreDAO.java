@@ -434,7 +434,7 @@ public class A04_PreDAO {
 			pstmt.setString(2, ins.getEname());
 			pstmt.setString(3, ins.getJob());
 			pstmt.setInt(4, ins.getMgr());
-			pstmt.setString(5, ins.getHiredate_s());
+			pstmt.setString(5, ins.getHiredateS());
 			pstmt.setDouble(6, ins.getSal());
 			pstmt.setDouble(7,  ins.getComm());
 			pstmt.setInt(8, ins.getDeptno());
@@ -475,11 +475,11 @@ public class A04_PreDAO {
 			}
 		}
 	}
-		public void updateEmp(Emp01 ins) {
+		public void updateEmp(Emp ins) {
 			try {
 				setConn();
 				con.setAutoCommit(false);
-				String sql = "UPDATE emp01\r\n"
+				String sql = "UPDATE emp\r\n"
 						+ "	SET ename = ?,\r\n"
 						+ "		job = ?,\r\n"
 						+ "		mgr = ?,\r\n"
@@ -492,7 +492,7 @@ public class A04_PreDAO {
 				pstmt.setString(1, ins.getEname());
 				pstmt.setString(2, ins.getJob());
 				pstmt.setInt(3, ins.getMgr());
-				pstmt.setString(4, ins.getHiredate_s());
+				pstmt.setString(4, ins.getHiredateS());
 				pstmt.setDouble(5, ins.getSal());
 				pstmt.setDouble(6, ins.getComm());
 				pstmt.setInt(7, ins.getDeptno());
@@ -540,7 +540,7 @@ public class A04_PreDAO {
 				try {
 					setConn();
 					con.setAutoCommit(false);
-					String sql = "DELETE FROM emp01\r\n"
+					String sql = "DELETE FROM emp\r\n"
 							+ "WHERE empno = ?";
 					pstmt = con.prepareStatement(sql);
 					pstmt.setInt(1, empno);
@@ -645,10 +645,7 @@ public class A04_PreDAO {
 		ArrayList<Emp> empList = new ArrayList<Emp>();
 		try {
 			setConn();
-			String sql = "SELECT *\r\n"
-					+ "FROM emp\r\n"
-					+ "WHERE ename LIKE '%' || ? || '%'\r\n"
-					+ "AND job LIKE '%' || ? || '%'";
+			String sql = "select * from emp where ename like '%' || ? || '%' and job like '%' || ? || '%'";
 			// 1. 에러 대비 : sql
 			System.out.println(sql);
 			pstmt = con.prepareStatement(sql);
@@ -756,13 +753,13 @@ public class A04_PreDAO {
 	}
 	
 	public Emp getEmpDetail(int empno) {
-		Emp emp = null;
+		Emp emp = new Emp();
 		try {
 			setConn();
 			String sql = "SELECT empno, ename, job, mgr,"
-					+ "to_char(hiredate, 'YYYY-MM-DD') hiredate_s,"
+					+ "to_char(hiredate, 'YYYY-MM-DD') hiredateS,"
 					+ "sal, comm, deptno \n"
-					+ "FROM EMP011\n"
+					+ "FROM EMP\n"
 					+ "WHERE empno = ?";
 			System.out.println(sql);
 			pstmt = con.prepareStatement(sql);
@@ -774,15 +771,10 @@ public class A04_PreDAO {
 							rs.getString("ename"),
 							rs.getString("job"),
 							rs.getInt("mgr"),
-							rs.getString("hiredate_s"),
+							rs.getString("hiredateS"),
 							rs.getDouble("sal"),
 							rs.getDouble("comm"),
 							rs.getInt("deptno"));
-
-
-							System.out.println(rs.getDouble("sal")); 
-							System.out.println(rs.getDouble("comm")); 
-							System.out.println(rs.getInt("deptno")); 
 			}
 
 			// 자원해제
@@ -856,11 +848,11 @@ public class A04_PreDAO {
 	}
 
 	public Dept getDeptDetail(int deptno) {
-		Dept dept = null;
+		Dept dept = new Dept();
 		try {
 			setConn();
 			String sql = "SELECT deptno, dname, loc\n"
-					+ "FROM dept011\n"
+					+ "FROM dept\n"
 					+ "WHERE deptno = ?";
 			System.out.println(sql);
 			pstmt = con.prepareStatement(sql);
@@ -1111,6 +1103,58 @@ public class A04_PreDAO {
 			}
 		}
 		return memList;
+	}
+
+	public void updateDept(Dept ins) {
+		try {
+			setConn();
+			con.setAutoCommit(false);
+			String sql = "UPDATE dept\r\n"
+					+ "	SET dname = ?,\r\n"
+					+ "		loc = ?,\r\n"
+					+ "WHERE deptno = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ins.getDname());
+			pstmt.setString(2, ins.getLoc());
+			pstmt.setInt(3, ins.getDeptno());
+			pstmt.executeUpdate();
+			con.commit();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("DB 에러: " + e.getMessage());
+			// commit 전에 예외가 발생하면 rollback 처리
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} catch (Exception e) {
+			System.out.println("일반 예외 : " + e.getMessage());
+		}finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	public static void main(String[] args) {

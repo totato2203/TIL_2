@@ -16,26 +16,43 @@ String path = request.getContextPath();
 <style>
 </style>
 <script>
-	/*
-	
-	*/
+
 </script>
 </head>
 <body>
 <%
+	String proc = request.getParameter("proc");
+	if(proc == null) proc = "";
+	int deptno = 0;
 	String deptnoS = request.getParameter("deptno");
-  Dept dept = new Dept();
-  if(deptnoS!=null&&!deptnoS.trim().equals("")){
-    int deptno = Integer.parseInt(deptnoS);
-    A04_PreDAO dao = new A04_PreDAO();
-    dept = dao.getDeptDetail(deptno);
-  }
+	Dept dept = new Dept();
+	if(deptnoS!=null&&!deptnoS.trim().equals("")){
+		deptno = Integer.parseInt(deptnoS);
+    	A04_PreDAO dao = new A04_PreDAO();
+	    if(proc.equals("upt")){
+	    	String dname = request.getParameter("dname"); if(dname == null) dname = "";
+	    	String loc = request.getParameter("loc"); if(loc == null) loc = "";
+	    	dept = new Dept(deptno, dname, loc);
+	    	dao.updateDept(dept);
+	    }
+    
+   		dept = dao.getDeptDetail(deptno);
+	}
 %>
-
+<script type="text/javascript">
+	var proc = "<%=proc%>";
+	if(proc != null && proc.trim() != ""){
+		if(proc == "upt"){
+			if(confirm("수정하였습니다.\n조회화면으로 이동하시겠습니까?")){
+				location.href = "a01_deptSchList.jsp";
+			}
+		}
+	}
+</script>
 
 
 <div class="container">
-  <form>
+  <form method="post">
   <div class="row">
     <div class="col-25">
       <label for="deptno">부서번호</label>
@@ -77,8 +94,7 @@ String path = request.getContextPath();
   }
 </script>
 <%
-  String proc = request.getParameter("proc");
-  System.out.println("현재 proc:"+proc);
+
 %>
 </body>
 </html>

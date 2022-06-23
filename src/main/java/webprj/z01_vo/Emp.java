@@ -8,7 +8,7 @@ public class Emp {
 	private String job;
 	private int mgr;
 	private Date hiredate;
-	private String hiredate_s;
+	private String hiredateS;
 	private double sal;
 	private double comm;
 	private int deptno;
@@ -29,13 +29,13 @@ public class Emp {
 		this.comm = comm;
 		this.deptno = deptno;
 	}
-	public Emp(int empno, String ename, String job, int mgr, String hiredate_s, double sal, double comm, int deptno) {
+	public Emp(int empno, String ename, String job, int mgr, String hiredateS, double sal, double comm, int deptno) {
 		super();
 		this.empno = empno;
 		this.ename = ename;
 		this.job = job;
 		this.mgr = mgr;
-		this.hiredate_s = hiredate_s;
+		this.hiredateS = hiredateS;
 		this.sal = sal;
 		this.comm = comm;
 		this.deptno = deptno;
@@ -70,11 +70,11 @@ public class Emp {
 	public void setHiredate(Date hiredate) {
 		this.hiredate = hiredate;
 	}
-	public String getHiredate_s() {
-		return hiredate_s;
+	public String getHiredateS() {
+		return hiredateS;
 	}
-	public void setHiredate_s(String hiredate_s) {
-		this.hiredate_s = hiredate_s;
+	public void setHiredateS(String hiredateS) {
+		this.hiredateS = hiredateS;
 	}
 	public double getSal() {
 		return sal;

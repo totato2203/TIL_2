@@ -109,7 +109,7 @@ div {
 </style>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link href="<%=path %>/a00_com\a01_common.css" rel="stylesheet">
+<link href="<%=path %>/a00_com/a01_common.css" rel="stylesheet">
 <script type="text/javascript">
 	function goInsertPage(){
 		location.href="a02_deptInsert.jsp";
@@ -156,14 +156,14 @@ for(Dept d : dao.getDeptList2(new Dept("", ""))){
 %>
 <script>
   function goDetail(deptno){
-    alert(deptno+"상세화면 이동");
-    location.href="a03_deptDetail.jsp?deptno="+deptno;
+    alert(deptno + " : 상세화면 이동");
+    location.href="a03_deptDetail.jsp?deptno=" + deptno;
   }
 </script>
 
 <table id="customers">
     <tr><th>부서번호</th><th>부서명</th><th>부서위치</th></tr>
-    <% for(Dept d:dao.getDeptList2(new Dept(dname,loc))){%>
+    <% for(Dept d:dao.getDeptList2(new Dept(dname, loc))){%>
     <tr ondblclick="goDetail(<%=d.getDeptno()%>)">
     <td><%=d.getDeptno()%></td><td><%=d.getDname()%></td><td><%=d.getLoc()%></td>
     </tr>

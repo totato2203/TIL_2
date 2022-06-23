@@ -15,27 +15,79 @@ String path = request.getContextPath();
 <link href="<%=path %>/a00_com/a01_common.css" rel="stylesheet">
 <style>
 </style>
-<script>
-  
-</script>
 </head>
 <body>
 <%
-	String empnoS = request.getParameter("empno");
+	String proc = request.getParameter("proc");
+	if(proc == null) proc = "";
+
   // a03_empDetail.jsp?empno=1000
-  Emp emp = new Emp();
-  if(empnoS!=null&&!empnoS.trim().equals("")){
-    int empno = Integer.parseInt(empnoS);
-    A04_PreDAO dao = new A04_PreDAO();
+	Emp emp = new Emp();
+  
+	int empno = 0;
+	String empnoS = request.getParameter("empno");
+	if(empnoS != null) empno = Integer.parseInt(empnoS);
+
+	if(empnoS!=null&&!empnoS.trim().equals("")){
+	    A04_PreDAO dao = new A04_PreDAO();
+   		// 수정 처리
+   		if(proc.equals("upt")){
+   			
+   			int mgr, deptno; mgr = deptno = 0;
+   			double sal, comm; sal = comm = 0;
+   			
+   			String mgrS = request.getParameter("mgr");
+   			if(mgrS != null) mgr = Integer.parseInt(mgrS);
+   			
+   			String deptnoS = request.getParameter("deptno");
+   			if(deptnoS != null) deptno = Integer.parseInt(deptnoS);
+   			
+   			
+   			String salS = request.getParameter("sal");
+   			if(salS != null) sal = Double.parseDouble(salS);
+   			
+   			String commS = request.getParameter("comm");
+   			if(commS != null) comm = Double.parseDouble(commS);
+   			
+   			
+   			String ename = request.getParameter("ename"); if(ename == null) ename = "";
+   			String job = request.getParameter("job"); if(job == null) job = "";
+   			String hiredateS = request.getParameter("hiredateS"); if(hiredateS == null) hiredateS = "";
+   			
+   			log("empno : " + empno); log("mgr : " + mgr); log("deptno : " + deptno);
+   			log("sal : " + sal); log("comm : " + comm);
+   			log("ename : " + ename); log("job : " + job); log("hiredateS : " + hiredateS);
+   			
+   			// 수정 처리를 위한 객체 매개변수 전달
+   			emp = new Emp(empno, ename, job, mgr, hiredateS, sal, comm, deptno);
+   			dao.updateEmp(emp); // 수정 처리
+   		}
+   		if(proc.equals("del")){
+   			dao.deleteEmp(empno);
+   		}
+	
+    // 등록된 내용 조회
     emp = dao.getEmpDetail(empno);
-    System.out.println(emp.getHiredate_s());
-    System.out.println(emp.getComm());
-    System.out.println(emp.getDeptno());
   }
 %>
+<script type="text/javascript">
+	var proc = "<%=proc%>";
+	if(proc != null && proc.trim() != ""){
+		if(proc == "upt"){
+			if(confirm("수정처리가 되었습니다\n메인화면으로 이동하시겠습니까?")){
+				location.href="a01_empSchList.jsp";
+			}
+		}
+		if(proc == "del"){
+			alert("삭제되었습니다!\n메인화면으로 이동")
+			location.href="a01_empSchList.jsp";
+		}
+	}
+</script>
+
 <h2>사원상세정보(<%=empnoS%>)</h2>
 <div class="container">
-  <form>
+  <form method="post">
     <div class="row">
       <div class="col-25">
         <label for="empno">사원번호</label>
@@ -73,7 +125,7 @@ String path = request.getContextPath();
         <label for="hiredateS">입사일</label>
       </div>
       <div class="col-75">
-        <input type="text" id="hiredateS" name="hiredateS" placeholder="YYYY-MM-DD" value="<%=emp.getHiredate_s()%>">
+        <input type="text" id="hiredateS" name="hiredateS" placeholder="YYYY-MM-DD" value="<%=emp.getHiredateS()%>">
       </div>
     </div>
     <div class="row">
@@ -109,16 +161,24 @@ String path = request.getContextPath();
   </form>
 </div>
 <script>
-  function uptEmp(){
-    if(confirm("수정하시겠습니까?")){
-      document.querySelector("[name=proc]").value="upt";
-      document.querySelector("form").submit();
-    }
+	function uptEmp(){
+		if(confirm("수정하시겠습니까?")){
+			document.querySelector("[name=proc]").value="upt";
+			document.querySelector("form").submit();
+	    }
+	}
+	function delEmp(){
+		if(confirm("삭제하시겠습니까?")){
+			document.querySelector("[name=proc]").value="del";
+			document.querySelector("form").submit();
+	    }
+	}
+  function gomain(){
+	  location.href="a01_empSchList.jsp";
   }
 </script>
 <%
-  String proc = request.getParameter("proc");
-  System.out.println("현재 proc:"+proc);
+
 %>
 </table>
 </body>

@@ -169,6 +169,14 @@ String path = request.getContextPath();
     </div>
   </div>
   <div class="row">
+    <div class="col-25">
+      <label for="deptno">부서번호</label>
+    </div>
+    <div class="col-75">
+      <input type="text" id="deptno" name="deptno" value="" placeholder="부서번호 입력..">
+    </div>
+  </div>
+  <div class="row">
     <input type="submit" onclick="regEmp()" value="등록">
   </div>
   </form>

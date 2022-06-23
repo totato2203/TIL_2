@@ -96,8 +96,6 @@ if(job == null) job = ""; // 초기화면에 전체 검색처리
 <body>
 <h2>사원정보</h2>
 <form method="get">
-	<h3 name="mgr" value="10000">요청값 넘어갈까요?</h3>
-	<%-- form 하위에 있는 form 형식 요청 객체가 아니기 때문에 넘어가지 않는다! --%>
 	사원명 : <input type="text" name="ename" value="<%=ename%>"/><br>
 	직책명 : <input type="text" name="job" value="<%=job%>"/><br>
 	<input type="button" id="regBtn" value="등록"
@@ -128,13 +126,13 @@ for(Emp e : dao.getEmpList2(new Emp("", ""))){
 %>
   <script>
     function goDetail(empno){
-      alert(empno+"상세화면 이동");
-      location.href="a03_empDetail.jsp?empno="+empno;
+      alert(empno+" : 상세화면 이동");
+      location.href="a03_empDetail.jsp?empno=" + empno;
     }
   </script>
   <table id="customers">
       <tr><th>사원번호</th><th>사원명</th><th>직책</th><th>급여</th><th>부서번호</th></tr>
-      <% for(Emp e:dao.getEmpList2(new Emp("",""))){%>
+      <% for(Emp e:dao.getEmpList2(new Emp(ename,job))){%>
       <tr ondblclick="goDetail(<%=e.getEmpno()%>)">
         <td><%=e.getEmpno()%></td><td><%=e.getEname()%></td><td><%=e.getJob()%></td><td><%=e.getSal()%></td><td><%=e.getDeptno()%></td>
       </tr>
