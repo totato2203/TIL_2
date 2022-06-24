@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     import="webprj.dao.A04_PreDAO"
-    import="webprj.z01_vo.*"%>
+    import="webprj.z01_vo.*"
+    isErrorPage="true"%>
 <%
 request.setCharacterEncoding("utf-8");
 String path = request.getContextPath();
@@ -21,10 +22,14 @@ String path = request.getContextPath();
 </script>
 </head>
 <body>
+<%
+	String req = request.getParameter("");
+%>
+<h2>에러가 발생했습니다.</h2>
+
 <table>
-	<tr><th>이름</th><td><%=request.getParameter("name") %></td></tr>
-	<tr><th>가격</th><td><%=request.getParameter("price") %></td></tr>
-	<tr><th>개수</th><td><%=request.getParameter("cnt") %></td></tr>
+	<tr><th>에러 내용</th><td><%=exception.getMessage() %></td></tr>
+	<tr><th>에러 클래스</th><td><%=exception.getClass() %></td></tr>
 </table>
 </body>
 </html>

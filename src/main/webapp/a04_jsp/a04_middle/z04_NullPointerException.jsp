@@ -20,11 +20,10 @@ String path = request.getContextPath();
 	*/
 </script>
 </head>
+<%--
+# 서버 단위로 설정하는 에러는 상단에 isErrorPage="true"를 설정하지 않아도 된다.
+--%>
 <body>
-<table>
-	<tr><th>이름</th><td><%=request.getParameter("name") %></td></tr>
-	<tr><th>가격</th><td><%=request.getParameter("price") %></td></tr>
-	<tr><th>개수</th><td><%=request.getParameter("cnt") %></td></tr>
-</table>
+<h2>NullPointerException(객체가 생성되지 않았습니다.)</h2>
 </body>
 </html>

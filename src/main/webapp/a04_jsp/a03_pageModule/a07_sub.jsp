@@ -4,7 +4,6 @@
     import="webprj.z01_vo.*"%>
 <%
 request.setCharacterEncoding("utf-8");
-String path = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>
@@ -21,10 +20,10 @@ String path = request.getContextPath();
 </script>
 </head>
 <body>
-<table>
-	<tr><th>이름</th><td><%=request.getParameter("name") %></td></tr>
-	<tr><th>가격</th><td><%=request.getParameter("price") %></td></tr>
-	<tr><th>개수</th><td><%=request.getParameter("cnt") %></td></tr>
-</table>
+<%
+	String fprice = "1000";
+%>
+<h3>음식명 : <%=fname %></h3>
+
 </body>
 </html>

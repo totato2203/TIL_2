@@ -4,7 +4,6 @@
     import="webprj.z01_vo.*"%>
 <%
 request.setCharacterEncoding("utf-8");
-String path = request.getContextPath();
 %>
 <!DOCTYPE html>
 <html>

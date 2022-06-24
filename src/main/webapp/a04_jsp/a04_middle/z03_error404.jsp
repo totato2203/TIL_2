@@ -21,10 +21,8 @@ String path = request.getContextPath();
 </script>
 </head>
 <body>
-<table>
-	<tr><th>이름</th><td><%=request.getParameter("name") %></td></tr>
-	<tr><th>가격</th><td><%=request.getParameter("price") %></td></tr>
-	<tr><th>개수</th><td><%=request.getParameter("cnt") %></td></tr>
-</table>
+<h2>404 에러로 페이지가 없습니다!!</h2>
+<img src="https://search.pstatic.net/common/?src=http%3A%2F%2Fcafefiles.naver.net%2F20120817_18%2Frkfkaxh123_1345170669511nm3A4_JPEG%2F-1444182424.jpg&type=a340">
+
 </body>
 </html>

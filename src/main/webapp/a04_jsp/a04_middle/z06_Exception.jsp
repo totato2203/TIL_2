@@ -21,10 +21,28 @@ String path = request.getContextPath();
 </script>
 </head>
 <body>
+<%
+	String req = request.getParameter("");
+%>
+
+<div class="container">
+	<form>
+	<div class="row">
+		<div class="col-25">
+			<label for="dname">@@@</label>
+		</div>
+		<div class="col-75">
+			<input type="text" id="dname" name="dname" placeholder="부서명" value="">
+		</div>
+	</div>
+	<div class="row">
+		<input type="submit" value="검색">
+	</div>
+	</form>
+</div>
 <table>
-	<tr><th>이름</th><td><%=request.getParameter("name") %></td></tr>
-	<tr><th>가격</th><td><%=request.getParameter("price") %></td></tr>
-	<tr><th>개수</th><td><%=request.getParameter("cnt") %></td></tr>
+	<tr><th></th>###<th>###</th><th>##</th></tr>
+	<tr><td></td><td></td><td></td></tr>
 </table>
 </body>
 </html>

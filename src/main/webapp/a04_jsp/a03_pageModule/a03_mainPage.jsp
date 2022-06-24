@@ -23,8 +23,8 @@ String path = request.getContextPath();
 <body>
 <table>
 	<tr><th>이름</th><td><%=request.getParameter("name") %></td></tr>
-	<tr><th>가격</th><td><%=request.getParameter("price") %></td></tr>
-	<tr><th>개수</th><td><%=request.getParameter("cnt") %></td></tr>
+	<tr><th>나이</th><td><%=request.getParameter("age") %></td></tr>
+	<tr><th>사는 곳</th><td><%=request.getParameter("loc") %></td></tr>
 </table>
 </body>
 </html>

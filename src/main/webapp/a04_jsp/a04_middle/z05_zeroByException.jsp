@@ -21,10 +21,14 @@ String path = request.getContextPath();
 </script>
 </head>
 <body>
+<%
+	String req = request.getParameter("");
+%>
+<h2>java.lang.ArithmeticException 예외 발생 했습니다.</h2>
+
 <table>
-	<tr><th>이름</th><td><%=request.getParameter("name") %></td></tr>
-	<tr><th>가격</th><td><%=request.getParameter("price") %></td></tr>
-	<tr><th>개수</th><td><%=request.getParameter("cnt") %></td></tr>
+	<tr><th></th><td></th></tr>
+	<tr><th></th><td></td><td></td></tr>
 </table>
 </body>
 </html>

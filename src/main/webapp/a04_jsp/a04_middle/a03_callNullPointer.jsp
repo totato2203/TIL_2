@@ -20,11 +20,17 @@ String path = request.getContextPath();
 	*/
 </script>
 </head>
+<%--
+ex) z04_zeroByException.jsp (예외 처리 jsp)
+		java.lang.ArithmeticException (서버에 등록할 예외 클래스)
+	a04_call_Arithmetic.jsp (테스트용 jsp)
+--%>
 <body>
-<table>
-	<tr><th>이름</th><td><%=request.getParameter("name") %></td></tr>
-	<tr><th>가격</th><td><%=request.getParameter("price") %></td></tr>
-	<tr><th>개수</th><td><%=request.getParameter("cnt") %></td></tr>
-</table>
+<%
+	String req = request.getParameter("");
+	log(req.toString());
+%>
+<h2></h2>
+
 </body>
 </html>

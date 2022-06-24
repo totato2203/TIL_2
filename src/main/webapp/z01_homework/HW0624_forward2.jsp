@@ -21,10 +21,7 @@ String path = request.getContextPath();
 </script>
 </head>
 <body>
-<table>
-	<tr><th>이름</th><td><%=request.getParameter("name") %></td></tr>
-	<tr><th>가격</th><td><%=request.getParameter("price") %></td></tr>
-	<tr><th>개수</th><td><%=request.getParameter("cnt") %></td></tr>
-</table>
+<h2>일반 회원 페이지</h2>
+<h3>일반 회원 : <%=request.getAttribute("id") %> 로그인 중</h3>
 </body>
 </html>

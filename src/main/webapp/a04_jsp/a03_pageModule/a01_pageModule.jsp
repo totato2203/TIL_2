@@ -35,10 +35,20 @@ String path = request.getContextPath();
 		<jsp:param name="파라미터이름" value="값"/>
 --%>
 <body>
-<%
-	String req = request.getParameter("");
-%>
-<jsp:include page="a02_subPage.jsp"/>
+
+<jsp:include page="a02_subPage.jsp">
+	<jsp:param name="name" value="사과"/>
+	<jsp:param name="price" value="3000"/>
+	<jsp:param name="cnt" value="2"/>
+</jsp:include>
+	
+<jsp:include page="a03_mainPage.jsp">
+	<jsp:param name="name" value="홍길동"/>
+	<jsp:param name="age" value="20"/>
+	<jsp:param name="loc" value="서울 방배동"/>
+</jsp:include>
+	
+
 <h2>현재 페이지!!</h2>
 <div class="container">
 	<form>

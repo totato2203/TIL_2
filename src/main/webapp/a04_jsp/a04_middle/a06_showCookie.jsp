@@ -21,10 +21,16 @@ String path = request.getContextPath();
 </script>
 </head>
 <body>
+<%
+%>
+<h2>쿠키 확인하기</h2>
 <table>
-	<tr><th>이름</th><td><%=request.getParameter("name") %></td></tr>
-	<tr><th>가격</th><td><%=request.getParameter("price") %></td></tr>
-	<tr><th>개수</th><td><%=request.getParameter("cnt") %></td></tr>
+	<tr><th>쿠키 이름</th><th>쿠키값</th></tr>
+	<%
+	for(Cookie ck : request.getCookies()){
+	%>
+	<tr><td><%=ck.getName() %></td><td><%=ck.getValue() %></td></tr>
+	<%} %>
 </table>
 </body>
 </html>
