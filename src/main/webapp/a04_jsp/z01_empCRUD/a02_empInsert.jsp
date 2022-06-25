@@ -20,9 +20,7 @@ String path = request.getContextPath();
 
 </style>
 <script>
-   /*
-   
-   */
+
    function regEmp(){
 	   	if(confirm("사원을 등록하시하겠습니까?")){
 			var empnoObj = document.querySelector("#empno");
@@ -52,7 +50,8 @@ String path = request.getContextPath();
 			document.querySelector("form").submit();
 		}
    }
-   <%
+   
+<%
    String req = request.getParameter("");
 
    int empno, mgr, deptno; empno = mgr = deptno = 0;
@@ -94,7 +93,6 @@ String path = request.getContextPath();
      dao.insertEmp(new Emp(empno, ename, job, mgr, hiredateS, sal, comm, deptno));
      isIns = "Y";
    }
-
 %>
 
 	var isIns = "<%=isIns%>";
