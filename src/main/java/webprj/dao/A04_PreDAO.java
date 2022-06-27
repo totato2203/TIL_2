@@ -701,6 +701,66 @@ public class A04_PreDAO {
 		return empList;
 	}
 
+	public ArrayList<Emp> getEmpList3(Emp sch) {
+		ArrayList<Emp> empList = new ArrayList<Emp>();
+		try {
+			setConn();
+			String sql = "select * from emp where 1=1 ";
+					if(sch.getEname() != null) {
+						sql += "AND ename LIKE '%' || ? || '%' \r\n";
+					}
+					if(sch.getJob() != null) {
+						sql += "AND job LIKE '%' || ? || '%'";
+					}
+					
+			// 1. 에러 대비 : sql
+			System.out.println(sql);
+			pstmt = con.prepareStatement(sql);
+			// 2. ?와 mapping 되는 데이터 개수, type(유형), null
+			// 1. 에러 대비 : sql	System.out.println() 반드시 확인
+			// 2. ?와 mapping 되는 데이터 개수, type(유형), null
+			// 3. rs.getInt("empno") : select은 선택 컬럼과 타입
+			int cnt = 1;
+			if(sch.getEname() != null) {
+				pstmt.setString(cnt++, sch.getEname());
+			}
+			if(sch.getJob() != null) {
+				pstmt.setString(cnt++, sch.getJob());
+			}
+			rs = pstmt.executeQuery();
+			rs.close();
+			pstmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("DB 에러: " + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("일반 예외 : " + e.getMessage());
+		}finally {
+			if(rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return empList;
+	}
+
 	public ArrayList<Dept> getDeptList2(Dept sch) {
 		ArrayList<Dept> deptList = new ArrayList<Dept>();
 		try {

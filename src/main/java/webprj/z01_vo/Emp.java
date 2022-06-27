@@ -1,5 +1,5 @@
 package webprj.z01_vo;
-
+// webprj.z01_vo.Emp
 import java.util.Date;
 
 public class Emp {
@@ -12,6 +12,7 @@ public class Emp {
 	private double sal;
 	private double comm;
 	private int deptno;
+	private boolean pass;
 	public Emp() {}
 	public Emp(String ename, String job) {
 		super();
@@ -40,9 +41,12 @@ public class Emp {
 		this.comm = comm;
 		this.deptno = deptno;
 	}
+	// get프로퍼티명 : Empno ==> empno
+	// get프로퍼티명 : Empno01 ==> empno01
 	public int getEmpno() {
 		return empno;
 	}
+	// set프로퍼티명
 	public void setEmpno(int empno) {
 		this.empno = empno;
 	}
@@ -93,6 +97,12 @@ public class Emp {
 	}
 	public void setDeptno(int deptno) {
 		this.deptno = deptno;
+	}
+	public boolean isPass() {
+		return pass;
+	}
+	public void setPass(boolean pass) {
+		this.pass = pass;
 	}
 	
 }

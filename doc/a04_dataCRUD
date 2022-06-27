@@ -1,4 +1,9 @@
 # 웹 화면에서 리스트 등록/수정/삭제 처리
+0. 핵심 프로세스
+	1) 화면단 기본 디자인 : html/css
+	2) 이벤트를 통해 동적인 처리, 유효성 처리 : javascript
+	3) 로직, 데이터베이스 처리 : java(dao)
+
 1. 데이터 등록 처리
 	1) 메인 화면에서 등록 버튼 생성 및 등록 화면으로 이동 처리(js)
 		함수 호출 : location.href="등록화면"
@@ -48,7 +53,8 @@
 4. 필수입력항복 설정 js로 처리 요청값 확인(등록데이터)
 	<input type="submit" ==> <input type=""button" onclick="regEmp()"
 	function regEmp(){
-		var empnoObj = document.querySelector("#empno");
+		var empnoObj = document.querySelector("[name = empno]"); // name값 속성으로 접근
+		var empnoObj = document.querySelector("#empno"); // id명으로 접근
 		var enameObj = document.querySelector("#ename");
 		var hiredateSObj = document.querySelector("#hiredateS");
 		if(empnoObj.value==""){
@@ -103,6 +109,13 @@
 	
 5. 등록처리 DAO 호출 및 완료
     1) sql ==> VO ==> 기능메소드
+    	select deptno, dname, loc
+    	==>
+    	class Dept{
+    		private int deptno;
+    		private String dname;
+    		private String loc;
+    	}
     2) jsp
         요청값을 기능메소드에 매개변수 Emp 객체로 넘기기 위해서
         new Emp(요청값..... )
