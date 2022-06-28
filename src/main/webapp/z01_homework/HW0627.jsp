@@ -95,6 +95,53 @@ String path = request.getContextPath();
 <%--
 [1단계:확인] 4. 부서정보를 등록하는 form을 만들고 useBean을 이용해서 등록 처리하고, 현재 등록된 내용을 리스트 처리하세요(DAO)
 --%>
+<h2>부서 등록 및 리스트</h2>
+<form>
+<div class="container">
+	<div class="row">
+		<div class="col-25">
+			<label for="deptno">부서번호</label>
+		</div>
+		<div class="col-75">
+			<input type="text" id="deptno" name="deptno" placeholder="부서번호 입력.." value="">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-25">
+			<label for="dname">부서명</label>
+		</div>
+		<div class="col-75">
+			<input type="text" id="dname" name="dname" placeholder="부서명 입력.." value="">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-25">
+			<label for="loc">부서위치</label>
+		</div>
+		<div class="col-75">
+			<input type="text" id="loc" name="loc" placeholder="부서위치 입력.." value="">
+		</div>
+	</div>
+	<div class="row">
+		<input type="submit" value="부서정보 등록">
+	</div>
+</div>
+</form>
+<jsp:useBean id="dept" class="webprj.z01_vo.Dept"/>
+<jsp:setProperty property="*" name="dept"/>
+<%
+A04_PreDAO dao = new A04_PreDAO();
+if(dept.getDname() != null){ // 초기화면이 아닐 때
+	dao.insertDept(dept);
+}
+%>
+<table>
+	<tr><th>부서번호</th><th>부서명</th><th>부서위치</th></tr>
+	<%for(Dept d : dao.getDeptList("", "")){ %>
+	<tr><td><%=d.getDeptno() %></td><td><%=d.getDname() %></td><td><%=d.getLoc() %></td></tr>
+	<%} %>
+	
+</table>
 
 <%--
 [1단계:확인] 5. el을 이용하여 곰돌이 3마리가 먹은 빵의 갯수가 20개일 때, 균등 배분 빵의 갯수와 나머지 갯수 출력하세요.
@@ -107,7 +154,7 @@ String path = request.getContextPath();
 <table>
 	<tr><th>곰돌이 수</th><td>${bears}</td></tr>
 	<tr><th>빵 개수</th><td>${breads}</td></tr>
-	<tr><th>(빵 개수) / (곰돌이 수) = 균등 배분 빵 개수</th><td>${breads / bears - breads % bears }</td></tr>
+	<tr><th>(빵 개수) / (곰돌이 수) = 균등 배분 빵 개수</th><td>${Math.floor(breads / bears) }</td></tr>
 	<tr><th>(빵 개수) % (곰돌이 수) = 나머지 개수</th><td>${breads % bears}</td></tr>
 </table>
 

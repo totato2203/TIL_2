@@ -872,7 +872,7 @@ public class A04_PreDAO {
 		try {
 			setConn();
 			con.setAutoCommit(false);
-			String sql = "INSERT INTO DEPT011 values(?,?,?) ";
+			String sql = "INSERT INTO DEPT values(?,?,?) ";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, ins.getDeptno());
 			pstmt.setString(2, ins.getDname());
