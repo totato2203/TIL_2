@@ -71,10 +71,13 @@
 	</form>
 </div> 
 <table>
-	<tr><th>no</th><th>사원번호</th><th>사원명</th><th>직책</th></tr>
+	<tr><th>no</th><th>사원번호</th><th>사원명</th><th>직책</th><th>입사일</th><th>급여</th></tr>
 	<c:forEach var="emp" items="${dao.getEmpList2(sch) }" varStatus="sts">
 	<tr style="background-color : ${sts.first?'yellow':''}; color:${sts.last?'red':''}">
-	<td>${sts.count }</td><td>${emp.empno }</td><td>${emp.ename }</td><td>${emp.job }</td></tr>
+	<td>${sts.count }</td><td>${emp.empno }</td><td>${emp.ename }</td><td>${emp.job }</td>
+	<td><fmt:formatDate value="${emp.hiredate }"/></td>
+	<td><fmt:formatNumber value="${emp.sal }"/></td>
+	</tr>
 	</c:forEach>
 </table>
 </body>

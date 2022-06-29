@@ -100,20 +100,19 @@
 	<h2>땡!!</h2>
 </c:if>
 	<form>
-	<table>
-		<tr>
-		<td><input type="text" id="ranNum01" name="ranNum01" value="<%=(int)(Math.random() * 8 + 2)%>"></td>
-		<td> X </td>
-		<td><input type="text" id="ranNum02" name="ranNum02" value="<%=(int)(Math.random() * 9 + 1)%>"></td>
-		<td> = </td>
-		<td><input type="text" id="answer" name="answer" placeholder="정답을 입력하세요.."></td>
-		</tr>
-	</table>
-		<input type="submit" value="검색">
+	<%-- <c:set var="ranNum01" value="<%=(int)(Math.random() * 8 + 2)%>"/> --%>
+		<input type="text" id="ranNum01" name="ranNum01" size="1" value="<%=(int)(Math.random() * 8 + 2)%>"> X
+		<input type="text" id="ranNum02" name="ranNum02" size="1" value="<%=(int)(Math.random() * 9 + 1)%>"> = 
+		<input type="text" id="answer" name="answer" size="1" placeholder="정답을 입력하세요..">
+		<input type="submit" value="정답 확인">
 	</form>
 	
 <%--
 [1단계:확인] 5. 회원정보리스트 dao기능 메서드를 추가하고, jstl을 통해서 검색 출력하세요.
+	1) dao
+		db(table ==> 데이터 입력) ==> sql ==> vo ==> dao 기능메소드 추가
+	2) 화면구성
+	3) 요청처리 및 조회
 --%>
 <h2>5. </h2>
 <jsp:useBean id="dao" class="webprj.dao.A04_PreDAO"/>
